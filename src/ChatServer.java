@@ -67,25 +67,43 @@ public class ChatServer {
                 // a name is submitted that is not already used.  Note that
                 // checking for the existence of a name and adding the name
                 // must be done while locking the set of names.
-                while (true) {
-                    out.println("SUBMITNAME");
-                    name = in.readLine();
-                    if (name == null) {
-                        return;
-                    }
-                    synchronized (names) {
-                        if (!names.contains(name)) {
-                            names.add(name);
-                            break;
+                if(writers.size() < 2)
+                {
+                	while (true) 
+                	{
+                        out.println("SUBMITNAME");
+                        name = in.readLine();
+                        if (name == null) 
+                        {
+                            return;
+                        }
+                        synchronized (names)
+                        {
+                            if (!names.contains(name)) 
+                            {
+                                names.add(name);
+                                break;
+                            }
                         }
                     }
+                	out.println("NAMEACCEPTED");
+                    writers.add(out);
                 }
+                else //room full, add to queue
+                {
+                	out.println("Sorry, room is currently full");
+                	while(true)
+                	{
+                		out.println("Sorry, room is currently full");
+                	}
+                }
+                
 
                 // Now that a successful name has been chosen, add the
                 // socket's print writer to the set of all writers so
                 // this client can receive broadcast messages.
-                out.println("NAMEACCEPTED");
-                writers.add(out);
+//                out.println("NAMEACCEPTED");
+//                writers.add(out);
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
