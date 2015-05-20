@@ -74,7 +74,8 @@ public class ChatClient {
     private void run() throws IOException {
 
         // Make connection and initialize streams
-        String serverAddress = getServerAddress();
+        //String serverAddress = getServerAddress();
+        String serverAddress = "127.0.0.1";
         Socket socket = new Socket(serverAddress, 9001);
         in = new BufferedReader(new InputStreamReader(
             socket.getInputStream()));
@@ -89,6 +90,8 @@ public class ChatClient {
                 textField.setEditable(true);
             } else if (line.startsWith("MESSAGE")) {
                 messageArea.append(line.substring(8) + "\n");
+            } else if(line.startsWith("Sorry")) {
+            	out.println("Sorry chatroom currently full");
             }
         }
     }

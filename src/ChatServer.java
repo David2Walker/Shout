@@ -92,9 +92,37 @@ public class ChatServer {
                 else //room full, add to queue
                 {
                 	out.println("Sorry, room is currently full");
+                	queue.add(out);
+                	
                 	while(true)
                 	{
-                		out.println("Sorry, room is currently full");
+                		if(writers.size() < 2)
+                		{
+                			queue.remove(out);
+                			//writers.add(out);
+                			out.println("There is now room, you may join the chat");
+                			
+                        	while (true) 
+                        	{
+                                out.println("SUBMITNAME");
+                                name = in.readLine();
+                                if (name == null) 
+                                {
+                                    return;
+                                }
+                                synchronized (names)
+                                {
+                                    if (!names.contains(name)) 
+                                    {
+                                        names.add(name);
+                                        break;
+                                    }
+                                }
+                            }
+                        	out.println("NAMEACCEPTED");
+                            writers.add(out);
+                            break;
+                		}
                 	}
                 }
                 
