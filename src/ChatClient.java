@@ -67,6 +67,15 @@ public class ChatClient {
             "Screen name selection",
             JOptionPane.PLAIN_MESSAGE);
     }
+    
+    private String roomFull()
+    {
+    	return JOptionPane.showInputDialog(
+                frame,
+                "Sorry the room is currently full",
+                "Please wait...",
+                JOptionPane.PLAIN_MESSAGE);
+    }
 
     /**
      * Connects to the server then enters the processing loop.
@@ -81,7 +90,7 @@ public class ChatClient {
             socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
 
-        // Process all messages from server, according to the protocol.
+        // Process all messages from server.
         while (true) {
             String line = in.readLine();
             if (line.startsWith("SUBMITNAME")) {
@@ -91,7 +100,7 @@ public class ChatClient {
             } else if (line.startsWith("MESSAGE")) {
                 messageArea.append(line.substring(8) + "\n");
             } else if(line.startsWith("Sorry")) {
-            	out.println("Sorry chatroom currently full");
+            	out.println(roomFull());
             }
         }
     }
