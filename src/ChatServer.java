@@ -99,8 +99,8 @@ public class ChatServer {
                 		if(writers.size() < 2)
                 		{
                 			queue.remove(out);
-                			//writers.add(out);
-                			out.println("There is now room, you may join the chat");
+                			writers.add(out);
+                			//out.println("There is now room, you may join the chat");
                 			
                         	while (true) 
                         	{
