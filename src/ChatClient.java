@@ -93,6 +93,7 @@ public class ChatClient {
         // Process all messages from server.
         while (true) {
             String line = in.readLine();
+            System.out.println(line + " line");
             if (line.startsWith("SUBMITNAME")) {
                 out.println(getName());
             } else if (line.startsWith("NAMEACCEPTED")) {

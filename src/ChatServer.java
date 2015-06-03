@@ -67,7 +67,7 @@ public class ChatServer {
                 // a name is submitted that is not already used.  Note that
                 // checking for the existence of a name and adding the name
                 // must be done while locking the set of names.
-                System.out.println(writers.size() + " inital writers");
+                //System.out.println(writers.size() + " inital writers");
                 if(writers.size() < 2)
                 {
                 	while (true) 
@@ -97,7 +97,7 @@ public class ChatServer {
                 	
                 	while(true)
                 	{
-                		System.out.println(writers.size() + " later writers");
+                		//System.out.println(writers.size() + " later writers");
                 		if(writers.size() < 2)
                 		{
                 			queue.remove(out);
@@ -123,7 +123,7 @@ public class ChatServer {
                             }
                         	out.println("NAMEACCEPTED");
                             writers.add(out);
-                            System.out.println(writers.size() + " later writers new");
+                            //System.out.println(writers.size() + " later writers new");
                             break;
                 		}
                 	}
@@ -149,9 +149,43 @@ public class ChatServer {
                     	String name = pm[1];
                     	System.out.println("message sent to " + name + " " + pm[2]);
                     	
-                    }                    	
-                    for (PrintWriter writer : writers) {
-                        writer.println("MESSAGE " + name + ": " + input);
+                    	if(names.contains(name))
+                    	{    
+                    		int loc = 0;
+                    		int i = 0;
+                    		for(String named : names)
+                    		{
+                    			System.out.println(name + "vs" + named);
+                    			if(named.equals(name))
+                    			{
+                    				System.out.println("loc = " + loc);
+                    				loc = i;
+                    				i=0;
+                    				break;
+                    			}
+                    			i++;
+                    		}
+                    		System.out.println(loc + " loc|i " + i);
+	                    	 for (PrintWriter writer : writers)
+	                    	 {
+	                    		 if(loc == i)
+	                    		 {
+	                    			 writer.println("MESSAGE " + name + ": pm: " + pm[2]);
+	                    			 break;
+	                    		 }
+	                    		 i++;
+	                         }
+                    	}
+                    	else
+                    	{
+                    		//writer.println("name " + name + " not found");
+                    	}
+                    }                    
+                    else
+                    {
+	                    for (PrintWriter writer : writers) {
+	                        writer.println("MESSAGE " + name + ": " + input);
+	                    }
                     }
                 }
             } catch (IOException e) {
