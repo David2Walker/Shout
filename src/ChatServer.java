@@ -67,6 +67,7 @@ public class ChatServer {
                 // a name is submitted that is not already used.  Note that
                 // checking for the existence of a name and adding the name
                 // must be done while locking the set of names.
+                System.out.println(writers.size() + " inital writers");
                 if(writers.size() < 2)
                 {
                 	while (true) 
@@ -96,10 +97,11 @@ public class ChatServer {
                 	
                 	while(true)
                 	{
+                		System.out.println(writers.size() + " later writers");
                 		if(writers.size() < 2)
                 		{
                 			queue.remove(out);
-                			writers.add(out);
+                			//writers.add(out);
                 			//out.println("There is now room, you may join the chat");
                 			
                         	while (true) 
@@ -121,6 +123,7 @@ public class ChatServer {
                             }
                         	out.println("NAMEACCEPTED");
                             writers.add(out);
+                            System.out.println(writers.size() + " later writers new");
                             break;
                 		}
                 	}
