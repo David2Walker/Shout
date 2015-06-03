@@ -143,6 +143,13 @@ public class ChatServer {
                     if (input == null) {
                         return;
                     }
+                    else if(input.startsWith("/msg "))
+                    {
+                    	String[] pm = input.split(" ");
+                    	String name = pm[1];
+                    	System.out.println("message sent to " + name + " " + pm[2]);
+                    	
+                    }                    	
                     for (PrintWriter writer : writers) {
                         writer.println("MESSAGE " + name + ": " + input);
                     }
