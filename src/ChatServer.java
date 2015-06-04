@@ -21,7 +21,7 @@ public class ChatServer {
      * The set of all the print writers for all the clients.  This
      * set is kept so we can easily broadcast messages.
      */
-    private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>(2);
+    private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>(4);
     private static HashSet<PrintWriter> queue = new HashSet<PrintWriter>();
     
     public static void main(String[] args) throws Exception {
@@ -68,7 +68,7 @@ public class ChatServer {
                 // checking for the existence of a name and adding the name
                 // must be done while locking the set of names.
                 //System.out.println(writers.size() + " inital writers");
-                if(writers.size() < 2)
+                if(writers.size() < 4)
                 {
                 	while (true) 
                 	{
@@ -98,7 +98,7 @@ public class ChatServer {
                 	while(true)
                 	{
                 		//System.out.println(writers.size() + " later writers");
-                		if(writers.size() < 2)
+                		if(writers.size() < 4)
                 		{
                 			queue.remove(out);
                 			//writers.add(out);
